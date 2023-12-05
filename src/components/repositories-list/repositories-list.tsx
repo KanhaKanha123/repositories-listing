@@ -45,10 +45,9 @@ export const RepositoriesList: FC = (): ReactElement<FC> => {
     setPaginationParams,
   } = useFetchData(queryVariables);
 
-  //TODO pagination on prev click doesn't work proper
   const handlePaginationChange = (pagination: paginationParamsProps): void => {
     setPaginationParams(pagination);
-debugger
+
     if (previousPageRef.current < pagination.current!) {
       setQueryVariables((prevProps: queryVariablesProps) => ({
         ...prevProps,

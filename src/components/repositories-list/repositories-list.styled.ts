@@ -11,6 +11,10 @@ export const ListWrapper = styled.section`
   & .tableClass{
     width:50vw;
   }
+
+  & .ant-pagination-options{
+    display:none;
+  }
 `;
 
 export const IconLabelWrapper=styled.div`
