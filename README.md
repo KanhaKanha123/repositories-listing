@@ -17,16 +17,17 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `Notes about the app design`
 
-1. App stricly follows SOLID design principles.
-2. Every function or component have it's own single responsiblity. App is very loosely copuled devided into multiple small resuable components.
-3. App follows DRY priniciple there is only single line of code for single purpose. Code is reused in th form of resusable components or functions or types.
-4. App uses KISS principle the code is simple and more redable. code refactoring is considered strictly. To make list component smaller the api logic and table columns logics are exctracted from the component and added to custom hooks so component have only states and the tsx code. which looks cleaner and more redable.
-5. App uses styled components they are more redable.
-6. Used .env and .env.local for local uses. the Github token is used from .env file as per standards.
+
+1. App strictly follows SOLID design principles.
+2. Every function or component has its own single responsibility. App is very loosely coupled and divided into multiple small reusable components.
+3. App follows DRY principle there is only single line of code for single purpose. Code is reused in the form of reusable components or functions or types.
+4. App uses the KISS principle and the code is simple and more readable. Code refactoring is considered strictly. To make list components smaller the api logic and table columns logics are extracted from the component and added to custom hooks so components have only states and the tsx code. which looks cleaner and more readable.
+5. App uses styled components and they are more readable.
+6. Used .env and .env.local for local uses. The Github token is used from the .env file as per standards.
 7. Comments are not used to make code neet and clean as variables and function names tells the mean of code well
 8. Search functionality implemented. 
-9. Pagination doesn't work proper when you jump direct from 1-4 or 1-7..
-10. Folder structured is simple components are devided as per features. If we look from top it's easy to understand
+9. Pagination doesn't work properly when you jump directly from 1-4 or 1-7.
+10. Folder structured simple components are divided as per features. If we look from top it's easy to understand
 
 `src
 |--asset
