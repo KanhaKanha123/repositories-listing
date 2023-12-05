@@ -28,7 +28,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 9. Pagination doesn't work proper when you jump direct from 1-4 or 1-7..
 10. Folder structured is simple components are devided as per features. If we look from top it's easy to understand
 
-src
+`src
 |--asset
 |--components
        |--header
@@ -50,10 +50,10 @@ src
 |--store
      |--context Api(For sharing data)
 |--.env(To store app level variables)
+`
 
 ### `Important Notes`
 1. I spend 2-3 hours for main functionality to complete and 2 hours extra for bonus points(Total arround 4 hours approx).Because i spend too much time, i skip few tests for major components. I started writing for isolated/resuable shared component then realised it's more time consuming so i did not write more tests. I hope i will get chance to explaine more in live session.
-
 2. Search functionality is completed.
 3. Pagination doesn't quite work proper when we click previous steps. Graphql before and after props is behaving little strange. It was more time consuming to investigate further so i just kept it like this. It's nice working condition.
 4. When you jump pages 1-5 or 3-7 it's breaking the pagination.
