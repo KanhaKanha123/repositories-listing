@@ -1,7 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -19,28 +15,45 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+### `Notes about the app design`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. App stricly follows SOLID design principles.
+2. Every function or component have it's own single responsiblity. App is very loosely copuled devided into multiple small resuable components.
+3. App follows DRY priniciple there is only single line of code for single purpose. Code is reused in th form of resusable components or functions or types.
+4. App uses KISS principle the code is simple and more redable. code refactoring is considered strictly. To make list component smaller the api logic and table columns logics are exctracted from the component and added to custom hooks so component have only states and the tsx code. which looks cleaner and more redable.
+5. App uses styled components they are more redable.
+6. Used .env and .env.local for local uses. the Github token is used from .env file as per standards.
+7. Comments are not used to make code neet and clean as variables and function names tells the mean of code well
+8. Search functionality implemented. 
+9. Pagination doesn't work proper when you jump direct from 1-4 or 1-7..
+10. Folder structured is simple components are devided as per features. If we look from top it's easy to understand
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+src
+|--asset
+|--components
+       |--header
+       |--repositories-list
+       |--shared(reusable components)
+            |--error
+            |--icon
+            |--link
+            |--loading
+|--error-boundry
+|--graphql
+      |--queries
+      |--client
+|--hooks
+|--pages(top level to intract with router)
+    |--repositories-list-page
+|--router
+     |-- '' have only one route for now
+|--store
+     |--context Api(For sharing data)
+|--.env(To store app level variables)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `Important Notes`
+1. I spend 2-3 hours for main functionality to complete and 2 hours extra for bonus points(Total arround 4 hours approx).Because i spend too much time, i skip few tests for major components. I started writing for isolated/resuable shared component then realised it's more time consuming so i did not write more tests. I hope i will get chance to explaine more in live session.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Search functionality is completed.
+3. Pagination doesn't quite work proper when we click previous steps. Graphql before and after props is behaving little strange. It was more time consuming to investigate further so i just kept it like this. It's nice working condition.
+4. When you jump pages 1-5 or 3-7 it's breaking the pagination.

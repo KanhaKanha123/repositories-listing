@@ -1,26 +1,17 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Header } from "./components";
+import { AppWrapper } from "./app.styled";
+import { FC, ReactElement } from "react";
+import { router } from "./router/router";
+import { RouterProvider } from "react-router-dom";
+import { Context } from "./store/context";
 
-function App() {
+export const App: FC = (): ReactElement<FC> => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Context>
+      <AppWrapper>
+        <Header title="Public Github Repos List"></Header>
+        <RouterProvider router={router}></RouterProvider>
+      </AppWrapper>
+    </Context>
   );
-}
-
-export default App;
+};
