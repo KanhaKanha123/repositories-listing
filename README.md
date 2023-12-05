@@ -53,7 +53,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 `
 
 ### `Important Notes`
-1. I spend 2-3 hours for main functionality to complete and 2 hours extra for bonus points(Total arround 4 hours approx).Because i spend too much time, i skip few tests for major components. I started writing for isolated/resuable shared component then realised it's more time consuming so i did not write more tests. I hope i will get chance to explaine more in live session.
+1. I spend 2-3 hours for main functionality to complete and 2 hours extra for bonus points(Total around 4 hours approx).Because I spend too much time, i skip a few tests for major components. I started writing for isolated/reusable shared components then realised it's more time consuming so i did not write more tests. I hope I will get a chance to explain more in a live session.
 2. Search functionality is completed.
-3. Pagination doesn't quite work proper when we click previous steps. Graphql before and after props is behaving little strange. It was more time consuming to investigate further so i just kept it like this. It's nice working condition.
+3. Pagination doesn't quite work properly when we click previous steps. Graphql before and after props is behaving a little strange. It was more time consuming to investigate further so I just kept it like this. It's a nice working condition.
 4. When you jump pages 1-5 or 3-7 it's breaking the pagination.
