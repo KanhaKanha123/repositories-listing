@@ -26,8 +26,9 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 6. Used .env and .env.local for local uses. The Github token is used from the .env file as per standards.
 7. Comments are not used to make code neet and clean as variables and function names tells the mean of code well
 8. Search functionality implemented. 
-9. Pagination doesn't work properly when you jump directly from 1-4 or 1-7.
-10. Folder structured simple components are divided as per features. If we look from top it's easy to understand
+9. Pagination works perfect.
+10. Unit testing done.
+11. Folder structured simple components are divided as per features. If we look from top it's easy to understand
 
 `src
 |--asset
@@ -54,7 +55,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 `
 
 ### `Important Notes`
-1. I spend 2-3 hours for main functionality to complete and 2 hours extra for bonus points(Total around 4 hours approx).Because I spend too much time, i skip a few tests for major components. I started writing for isolated/reusable shared components then realised it's more time consuming so i did not write more tests. I hope I will get a chance to explain more in a live session.
+1. I spend 2-3 hours for main functionality to complete and 2 hours extra for bonus points(Total around 4 hours approx). spend 2 hours extra to cover code review points. Includes unit tests and pagination fixes.
 2. Search functionality is completed.
-3. Pagination doesn't quite work properly when we click previous steps. Graphql before and after props is behaving a little strange. It was more time consuming to investigate further so I just kept it like this. It's a nice working condition.
-4. When you jump pages 1-5 or 3-7 it's breaking the pagination.
+3. Pagination works fine.
+4. Components covered with unit testing.
