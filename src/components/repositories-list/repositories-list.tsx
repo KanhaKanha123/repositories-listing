@@ -1,15 +1,19 @@
-import { FC, ReactElement, useState, useEffect, useRef } from "react";
+import { FC, ReactElement } from "react";
 
 import { Table } from "antd";
 
-import { Loading } from "../shared/loading/loading";
+import { Button } from "../shared/button/button";
 import { Error } from "../shared/error/error";
-import { ListWrapper } from "./repositories-list.styled";
+import { Loading } from "../shared/loading/loading";
 
-import type { queryVariablesProps } from "../../hooks";
+import {
+  ListWrapper,
+  PaginationWrapper,
+  TotalCount,
+  TotalCountPaginationWrapper,
+} from "./repositories-list.styled";
+
 import { useRepositories, useFetchData } from "../../hooks";
-import { paginationParamsProps } from "../../hooks/useFetchData";
-import { useRepositoriesAppState } from "../../store/context";
 
 /**
  * RepositoriesList main component to handle listing of the all repositories
@@ -18,69 +22,65 @@ import { useRepositoriesAppState } from "../../store/context";
 export const RepositoriesList: FC = (): ReactElement<FC> => {
   const [columns] = useRepositories();
 
-  const previousPageRef = useRef<number>(1);
-
-  //getting searchTerm from context api.
-  const { searchTerm } = useRepositoriesAppState();
-
-  const [queryVariables, setQueryVariables] = useState<queryVariablesProps>({
-    query: "is:public",
-    first: 10,
-    after: null,
-    before: null
-  });
-
-  useEffect(() => {
-    setQueryVariables((prevProps: queryVariablesProps) => ({
-      ...prevProps,
-      query: `in:name ${searchTerm} is:public`,
-    }));
-  }, [searchTerm]);
-
   const {
     error,
     loading,
-    repositoriesData,
-    paginationParams,
-    setPaginationParams,
-  } = useFetchData(queryVariables);
+    repositories,
+    hideOnSinglePage,
+    queryVariables,
+    fetchMore,
+  } = useFetchData();
 
-  const handlePaginationChange = (pagination: paginationParamsProps): void => {
-    setPaginationParams(pagination);
+  const handlePaginationClick = (type: string): void => {
+    const paginationVariables = {
+      ...queryVariables,
+      after: type === "next" ? repositories?.pageInfo.endCursor : null,
+      before: type === "prev" ? repositories?.pageInfo.startCursor : null,
+    };
 
-    if (previousPageRef.current < pagination.current!) {
-      setQueryVariables((prevProps: queryVariablesProps) => ({
-        ...prevProps,
-        after: repositoriesData?.pageInfo.endCursor,
-        query: `in:name ${searchTerm} is:public`,
-      }));
-    }
-
-    if (previousPageRef.current > pagination.current!) {
-      setQueryVariables((prevProps: queryVariablesProps) => ({
-        ...prevProps,
-        before: repositoriesData?.pageInfo.endCursor,
-        query: `in:name ${searchTerm} is:public`,
-      }));
-    }
-
-    previousPageRef.current = pagination.current!;
+    fetchMore({
+      variables: paginationVariables,
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return fetchMoreResult;
+      },
+    });
   };
 
   if (loading) return <Loading>Loading...</Loading>;
 
-  if (error) return <Error>`Error! ${error.message}`</Error>;
+  if (error) return <Error>Error! {error.message}</Error>;
 
   return (
     <ListWrapper>
       <Table
         className="tableClass"
         rowKey="id"
-        dataSource={repositoriesData?.nodes}
+        dataSource={repositories?.nodes}
         columns={columns}
-        pagination={paginationParams}
-        onChange={handlePaginationChange}
+        pagination={false}
       ></Table>
+      <TotalCountPaginationWrapper>
+        <TotalCount>
+          Total Repositories: {repositories?.repositoryCount}
+        </TotalCount>
+        {!hideOnSinglePage && (
+          <PaginationWrapper>
+            <Button
+              disabled={!repositories?.pageInfo.hasPreviousPage}
+              onClick={() => handlePaginationClick("prev")}
+            >
+              Prev
+            </Button>
+            <Button
+              disabled={!repositories?.pageInfo.hasNextPage}
+              onClick={() => handlePaginationClick("next")}
+            >
+              Next
+            </Button>
+          </PaginationWrapper>
+        )}
+      </TotalCountPaginationWrapper>
     </ListWrapper>
   );
 };

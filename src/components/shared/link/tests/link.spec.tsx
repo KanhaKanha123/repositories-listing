@@ -1,7 +1,5 @@
 import {screen, render } from "@testing-library/react";
-import { Link } from "./link"; 
-
-
+import { Link } from "../link"; 
 
 describe('Link component', () => {
 

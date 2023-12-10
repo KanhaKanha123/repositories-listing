@@ -1,7 +1,7 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 
 export const HeaderWrapper = styled.header`
-  background-color: #82a1e1;
+  background-color: #4575d9;
   width: 100%;
   height: 100px;
   display: flex;
@@ -16,7 +16,6 @@ height:30px;
 font-size: 1.8vw;
 font-weight: bold;
 `;
-
 
 export const TitleWrapper = styled.span`
   font-size: 1.8vw;

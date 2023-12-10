@@ -28,7 +28,7 @@ export const useRepositories = () => {
       ),
       dataIndex: "stargazerCount",
       key: "stargazerCount",
-      render: (forkCount: string) => (
+      render: (stargazerCount: string) => (
         <IconLabelWrapper>
           <Icon
             url={star}
@@ -36,7 +36,7 @@ export const useRepositories = () => {
             width="24px"
             height="24px"
           ></Icon>
-          <span>{forkCount}</span>
+          <span>{stargazerCount}</span>
         </IconLabelWrapper>
       ),
     },

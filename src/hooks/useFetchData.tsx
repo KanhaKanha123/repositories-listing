@@ -1,23 +1,25 @@
 import { useQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { DIRECTORIES_QUERY } from "../graphgl";
+import { useRepositoriesAppState } from "../store/context";
+
+const PAGE_SIZE = 10;
 
 export type queryVariablesProps = {
-  query: string,
-  first: number;
+  query: string;
+  last: number;
   after: string | null | undefined;
   before: string | null | undefined;
 };
 
 export type paginationParamsProps = {
-  current?: number;
   pageSize?: number;
   total?: number;
   hideOnSinglePage?: boolean;
 };
 
 type repositoriesListProps = {
-  id:string,
+  id: string;
   name: string;
   forkCount: number;
   stargazerCount: number;
@@ -25,53 +27,65 @@ type repositoriesListProps = {
   __typename: string;
 };
 
-type useQueryResponseProps = {
-  search: {
-    nodes: repositoriesListProps[];
-    repositoryCount:number,
-    pageInfo: {
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-      endCursor: string;
-    }
+export type searchResponseType = {
+  nodes: repositoriesListProps[];
+  repositoryCount: number;
+  pageInfo: {
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    endCursor: string;
+    startCursor: string;
   };
 };
 
-export const useFetchData = (variables: queryVariablesProps) => {
-  //state to manage pagination
-  const [paginationParams, setPaginationParams] =
-    useState<paginationParamsProps>({
-      current: 1,
-      pageSize: 10,
-      total: 0,
-      hideOnSinglePage: true,
-    });
+type useQueryResponseProps =
+  | {
+      search: searchResponseType;
+    }
+  | undefined;
 
-  const { loading, error, data } = useQuery<useQueryResponseProps>(
+export const useFetchData = () => {
+  //getting searchTerm from context api.
+  const { searchTerm } = useRepositoriesAppState();
+
+  const [repositories, setRepositories] = useState<searchResponseType>();
+
+  const [hideOnSinglePage, setHideOnSinglePage] = useState<boolean>(true);
+
+  const [queryVariables, setQueryVariables] = useState<queryVariablesProps>({
+    query: "is:public",
+    last: 10,
+    after: null,
+    before: null,
+  });
+
+  const { loading, error, data, fetchMore } = useQuery<useQueryResponseProps>(
     DIRECTORIES_QUERY,
     {
-      variables,
+      variables: queryVariables,
+      fetchPolicy: 'network-only',
+      notifyOnNetworkStatusChange: true
     }
   );
 
-  const repositoriesData = data?.search;
-
   useEffect(() => {
-    const updateTableParams = () => {
-      setPaginationParams((prevProps: paginationParamsProps) => ({
-        ...prevProps,
-        total: repositoriesData?.repositoryCount!,
-      }));
-    };
+    if (!loading && data) {
+      setRepositories({ ...data?.search });
+      setHideOnSinglePage(data?.search.repositoryCount <= PAGE_SIZE);
+    }
 
-    updateTableParams();
-  }, [repositoriesData?.repositoryCount]);
+    setQueryVariables((prevState: queryVariablesProps) => ({
+      ...prevState,
+      query: `in:name ${searchTerm} is:public`,
+    }));
+  }, [loading, data , data?.search.nodes, searchTerm]);
 
   return {
-    repositoriesData,
+    repositories,
     loading,
     error,
-    paginationParams,
-    setPaginationParams,
+    hideOnSinglePage,
+    queryVariables,
+    fetchMore,
   };
 };

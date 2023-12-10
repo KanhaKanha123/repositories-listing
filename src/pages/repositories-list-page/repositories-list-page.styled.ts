@@ -1,9 +1,12 @@
-import { styled } from "styled-components";
+import styled from "styled-components";
 
-export const InputWrapper = styled.div`
-width:46vw;
-height:30px;
-font-size: 1.8vw;
-font-weight: bold;
-padding-left: 30px;
+export const PageWrapper = styled.section`
+  width: 100%;
+  min-height: 800px;
+  max-height:100%;
+  background-color: #cbd7f0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2%;
 `;

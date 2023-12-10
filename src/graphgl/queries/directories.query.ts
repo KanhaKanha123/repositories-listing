@@ -6,19 +6,20 @@ export const DIRECTORIES_QUERY = gql`
     name
     url
     forkCount
-    stargazerCount
+    stargazerCount,
+    __typename
   }
 
   query searchRepos(
     $query: String!
-    $first: Int!
+    $last: Int!
     $before: String
     $after: String
   ) {
     search(
       query: $query
       type: REPOSITORY
-      first: $first
+      last: $last
       before: $before
       after: $after
     ) {
@@ -29,7 +30,8 @@ export const DIRECTORIES_QUERY = gql`
       pageInfo {
         hasNextPage
         hasPreviousPage
-        endCursor
+        endCursor,
+        startCursor
       }
     }
   }
